@@ -17,6 +17,9 @@ explainable flags → **manual review queue** → audit log.
 - Backend: `http://localhost:8000` (FastAPI + SQLite/SQLAlchemy)
 - Frontend: `http://localhost:5173` (React + TypeScript + Vite + Tailwind + Lucide + Axios)
 
+> 📄 **Full SIH submission document (16 sections, with screenshots):**
+> [`docs/SIH_Documentation.md`](docs/SIH_Documentation.md) · [documentation index](docs/README.md)
+
 ---
 
 ## Quick start (two terminals, no Docker required)

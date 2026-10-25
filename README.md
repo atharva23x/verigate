@@ -33,6 +33,18 @@ verigate-deploy/
 
 ---
 
+## 📄 Project documentation
+
+| Document | What it covers |
+|---|---|
+| [**SIH Project Documentation**](docs/SIH_Documentation.md) | Complete 16-section submission document — abstract, problem statement, proposed solution, objectives, existing vs proposed system, methodology, technology stack, system architecture, implementation with screenshots, innovation, feasibility, expected outcomes, future scope and references. |
+| [**Documentation index**](docs/README.md) | Quick links and project facts. |
+| [**Project README**](PROJECT_README.md) | Full project documentation: demo scenarios, API, architecture and setup. |
+
+> Problem statement **SIH26261** — AI-Powered Application Validation, Document Authentication and Regulatory Compliance Verification (AICTE, Ministry of Education).
+
+---
+
 ## Option A — Deploy with Docker (recommended)
 
 **Prerequisite:** [Docker Desktop](https://www.docker.com/products/docker-desktop/) (or Docker Engine + compose plugin).
