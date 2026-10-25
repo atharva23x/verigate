@@ -111,10 +111,12 @@ Both hosts connect to that repo, so deploying is a few clicks — no code change
    (grant Render access to it when asked).
 3. Render detects `render.yaml` at the repo root → choose **Blueprint** → **Apply**.
    It provisions `verigate-api` from `backend/` automatically
-   (free plan, lite dependencies, `$PORT`, health check `/health`).
+   (free plan, lite dependencies, `$PORT`, health check `/health`). Render may
+   append a suffix to the name if `verigate-api` is already taken — the live
+   URL is whatever the service page shows.
 4. Wait for **Live** (first build ≈ 3–5 min) →
-   **https://verigate-api.onrender.com** — open
-   `https://verigate-api.onrender.com/health` to confirm.
+   **https://verigate-api-8ejd.onrender.com** — open
+   `https://verigate-api-8ejd.onrender.com/health` to confirm.
 
 What the config already handles:
 
@@ -136,7 +138,7 @@ What the config already handles:
 3. Framework preset **Vite**, build `npm run build`, output `dist` (auto-filled)
    → **Deploy**.
 
-The build already targets `https://verigate-api.onrender.com`
+The build already targets `https://verigate-api-8ejd.onrender.com`
 (see `frontend/src/api/client.ts`), so **no environment variables are needed**.
 If you ever rename the Render service, set `VITE_API_URL` in
 Vercel → *Settings → Environment Variables* and redeploy.
@@ -147,7 +149,7 @@ Vercel → *Settings → Environment Variables* and redeploy.
 ### Step 3 — Verify
 
 1. Vercel URL → login page appears → sign in `officer1` / `officer123`.
-2. Backend healthy → `https://verigate-api.onrender.com/health`.
+2. Backend healthy → `https://verigate-api-8ejd.onrender.com/health`.
 3. Free Render instances **sleep after 15 min of inactivity**: the first load
    after that takes ~40 s (cold start), and login works while the demo data
    reseeds in the background.

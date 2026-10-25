@@ -6,7 +6,7 @@ const API_URL =
   import.meta.env.VITE_API_URL ??
   (["localhost", "127.0.0.1"].includes(window.location.hostname)
     ? "http://localhost:8000"
-    : "https://verigate-api.onrender.com");
+    : "https://verigate-api-8ejd.onrender.com");
 
 export const api = axios.create({ baseURL: API_URL });
 

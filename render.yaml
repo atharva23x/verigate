@@ -4,7 +4,9 @@
 # "Use render.yaml" (Blueprint) -> Apply. Everything below is then automatic.
 services:
   - type: web
-    name: verigate-api          # final URL: https://verigate-api.onrender.com
+    name: verigate-api          # Render may append a suffix if the name is taken;
+                                # live URL today: https://verigate-api-8ejd.onrender.com
+                                # (update frontend/src/api/client.ts if it changes)
     runtime: python
     plan: free                  # 512 MB RAM, 750 h/month, sleeps after 15 min idle
     rootDir: backend
