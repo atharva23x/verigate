@@ -103,7 +103,7 @@ All data is synthetic: generated PDFs, mock AICTE master records, mock issuer po
 | Document | Contents |
 |---|---|
 | [**SIH Project Documentation**](docs/SIH_Documentation.md) | 16 sections: abstract, problem statement, proposed solution, objectives, existing vs proposed system, methodology, technology stack, architecture, implementation with screenshots, innovation, feasibility, outcomes, future scope, references |
-| [**Demo guide**](docs/DEMO.md) | Video, demo accounts, scenario walkthrough, local run |
+| [**Demo guide**](docs/DEMO.md) | Video, QR code, live prototype, demo accounts and what the walkthrough shows |
 | [**Project README**](PROJECT_README.md) | Feature detail, API reference, data model, architecture |
 | [**Deployment guide**](docs/DEPLOYMENT.md) | Docker, local dev, Render + Vercel, configuration, troubleshooting |
 | [**Documentation index**](docs/README.md) | Quick links and project facts |
