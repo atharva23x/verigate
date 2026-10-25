@@ -9,7 +9,7 @@ Smart India Hackathon 2026 · Problem statement **SIH26261** · All India Counci
 | | |
 |---|---|
 | 🌐 **Live prototype** | [**https://verigate-app.vercel.app**](https://verigate-app.vercel.app) — sign in with `officer1` / `officer123` |
-| 🎬 **Demo video (~4 min)** | [Google Drive](https://drive.google.com/file/d/1ok8D4ddMCRJCyEIHwnPq0eNAzhgTWuIm/view?usp=sharing) · [walkthrough notes](docs/DEMO.md) |
+| 🎬 **Demo video** | [Google Drive](https://drive.google.com/file/d/1ok8D4ddMCRJCyEIHwnPq0eNAzhgTWuIm/view?usp=sharing) · [walkthrough notes](docs/DEMO.md) |
 | 📄 **Full documentation (16 sections)** | [**docs/SIH_Documentation.md**](docs/SIH_Documentation.md) |
 
 > ⏱ The hosted demo runs on free tiers, so the first load can take ~40 s while the
@@ -95,15 +95,6 @@ All data is synthetic: generated PDFs, mock AICTE master records, mock issuer po
 **Backend** FastAPI · Python 3.12 · SQLAlchemy · SQLite (PostgreSQL-ready) · Pydantic · ReportLab
 **Analysis** PyMuPDF · PaddleOCR/Tesseract · XGBoost consistency model · ELA tamper detection · pHash duplicates · HMAC-signed mock issuer APIs
 **Auth** PBKDF2-SHA256 · JWT · role guards · append-only audit log
-
-## Run it locally
-
-```bash
-docker compose up --build
-```
-
-Then open http://localhost:5173 and sign in as `officer1` / `officer123`.
-First boot seeds 30 synthetic applications through the full pipeline (~30 s).
 
 ---
 
