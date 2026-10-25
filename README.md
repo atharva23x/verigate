@@ -131,6 +131,8 @@ What the config already handles:
 
 ### Step 2 — Frontend on Vercel
 
+**Live frontend: https://verigate-app.vercel.app** (project `verigate-app`).
+
 1. https://vercel.com/new → **Import Git Repository** → pick `atharva23x/verigate`.
 2. **Root Directory must be `frontend`** — Project → *Settings → General →
    Root Directory* → `frontend` → Save. (This was the blank-screen cause: the
@@ -145,6 +147,15 @@ Vercel → *Settings → Environment Variables* and redeploy.
 
 `frontend/vercel.json` contains the SPA rewrite, so deep links (`/login`,
 `/queue`, …) don't 404.
+
+> ⚠️ **Deployment Protection must stay OFF**, otherwise every visitor is sent to
+> a Vercel login screen instead of your app (it looks like a broken/foreign
+> site, which is very confusing). Check with
+> `vercel project protection verigate-app --json` — `ssoProtection` should be
+> `null`. New projects on some accounts default to
+> `all_except_custom_domains`. Toggle it off via
+> `vercel project protection disable verigate-app --sso` or
+> *Project → Settings → Deployment Protection*.
 
 ### Step 3 — Verify
 
