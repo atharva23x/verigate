@@ -1,38 +1,35 @@
 # Render Blueprint - provisions the VeriGate API and Frontend from this repo.
 #
-# Render dashboard -> New + -> Blueprint -> connect the GitHub repo ->
-# "Use render.yaml" -> Apply. Everything below is then automatic.
+# Render dashboard -> Blueprints -> Connect repo / Sync -> Apply
 services:
   - type: web
-    name: verigate-api          # Render may append a suffix if the name is taken;
-                                # live URL today: https://verigate-api-8ejd.onrender.com
-                                # (update frontend/src/api/client.ts if it changes)
+    name: verigate-api
     runtime: python
-    plan: free                  # 512 MB RAM, 750 h/month, sleeps after 15 min idle
+    plan: free
     rootDir: backend
     buildCommand: pip install -r requirements-lite.txt
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
     healthCheckPath: /health
     envVars:
       - key: PYTHON_VERSION
-        value: "3.12.10"        # same version the project is tested with
+        value: "3.12.10"
       - key: MOCK_MODE
-        value: "True"           # demo safeguard: never depends on heavy OCR/ML
+        value: "True"
       - key: SEED_ON_STARTUP
-        value: "True"           # seeds 30 synthetic applications in the BACKGROUND
+        value: "True"
       - key: JWT_SECRET
-        generateValue: true     # unique random secret per environment
+        generateValue: true
       - key: VERIGATE_DB
-        value: /tmp/verigate.db           # ephemeral: reseeded after a restart
+        value: /tmp/verigate.db
       - key: VERIGATE_STORAGE
         value: /tmp/verigate-storage
 
-  - type: static
+  - type: web
     name: verigate-ui
-    plan: free
+    runtime: static
     rootDir: frontend
     buildCommand: npm install && npm run build
-    staticPublishPath: dist
+    staticPublishPath: frontend/dist
     routes:
       - type: rewrite
         source: /*
