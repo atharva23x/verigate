@@ -693,6 +693,4 @@ VeriGate does not replace regulatory judgement. It reduces the distance between 
 
 ---
 
-**Document version:** 1.0 · **Prepared for:** Smart India Hackathon 2026 · **Prototype:** VeriGate (localhost, synthetic data)
-
 > VeriGate is a decision-support prototype. It does not grant approval, reject an application, or establish forgery. All statutory scrutiny, inspection and final decisions remain with the competent AICTE authorities.
