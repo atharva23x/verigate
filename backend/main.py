@@ -79,6 +79,23 @@ def startup():
     threading.Thread(target=_warmup, daemon=True).start()
 
 
+@app.get("/", include_in_schema=False)
+def root():
+    """Landing response for the bare API URL (otherwise FastAPI 404s here)."""
+    return {
+        "name": "VeriGate API",
+        "version": "1.0.0",
+        "status": "ok",
+        "message": "VeriGate backend is running.",
+        "endpoints": {
+            "health": "/health",
+            "docs": "/docs",
+            "openapi": "/openapi.json",
+        },
+        "frontend": "https://verigate-app.vercel.app",
+    }
+
+
 @app.get("/health")
 def health():
     return {
