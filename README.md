@@ -1,4 +1,47 @@
-# VeriGate — Deployment Bundle
+# VeriGate
+
+**AI-Powered Application Validation, Document Authentication and Regulatory Compliance Verification**
+**for AICTE Extension of Approval (EoA)**
+
+> **AI advises. Evidence decides. Humans approve.**
+
+Smart India Hackathon 2026 · Problem statement **SIH26261** · All India Council for Technical Education (AICTE), Ministry of Education
+
+| | |
+|---|---|
+| 🌐 **Live prototype** | [**verigate-app.vercel.app**](https://verigate-app.vercel.app) — sign in with `officer1` / `officer123` |
+| 🎬 **Demo video (~4 min)** | [Google Drive](https://drive.google.com/file/d/1ok8D4ddMCRJCyEIHwnPq0eNAzhgTWuIm/view?usp=sharing) · [QR code](docs/demo-video-qr.png) · [what the demo shows](docs/DEMO.md) |
+| 📄 **SIH documentation (16 sections)** | [**docs/SIH_Documentation.md**](docs/SIH_Documentation.md) |
+| 📚 **Documentation index** | [docs/README.md](docs/README.md) |
+| ⚙️ **How it works, in one line** | upload → OCR → APH 2024-27 checklist → issuer verification → tamper/duplicate detection → XGBoost consistency → **Evidence Gate** → human review → audit |
+
+> ⏱ **Cold start:** the live demo runs on a free Render instance that sleeps after
+> 15 minutes of inactivity — the first request can take ~40 s to wake up. Demo data
+> reseeds in the background after every restart. A one-command local build is below.
+
+---
+
+## What VeriGate does
+
+VeriGate is a verification workspace that sits in front of the AICTE application
+portal. It reads the uploaded EoA documents, extracts fields with page-level
+bounding boxes and confidence, checks them against configurable APH rules and
+mock AICTE master records, looks for image tampering and duplicated documents,
+and queries issuer sources.
+
+Its core safety property is the **Evidence Gate**: an application is marked
+`VERIFIED` only when every evidence condition holds — OCR confidence above
+threshold, every issuer-backed document confirmed, no critical rule violation,
+no tampering, no duplication, and enough cross-record consistency. If any link is
+weak it returns `INSUFFICIENT_EVIDENCE` and routes the case to a human reviewer
+with evidence-linked reasons. **It never auto-rejects and never approves.**
+
+> VeriGate is decision support. All statutory scrutiny, inspection and final
+> decisions remain with the competent AICTE authorities.
+
+---
+
+## Deployment bundle
 
 Everything needed to **build and deploy VeriGate** lives in this folder.
 It is self-contained: no files outside this directory are required.
@@ -113,8 +156,16 @@ npm run dev
 
 ## Live deployment (GitHub → Render + Vercel)
 
-The code is already pushed to **https://github.com/atharva23x/verigate** (private).
+The code is already pushed to **https://github.com/atharva23x/verigate** (public).
 Both hosts connect to that repo, so deploying is a few clicks — no code changes.
+
+**Already deployed:**
+
+| Service | URL |
+|---|---|
+| Frontend (Vercel) | https://verigate-app.vercel.app |
+| Backend (Render) | https://verigate-api-8ejd.onrender.com |
+| API docs | https://verigate-api-8ejd.onrender.com/docs |
 
 ### Step 1 — Backend on Render (free)
 

@@ -19,6 +19,8 @@ explainable flags → **manual review queue** → audit log.
 
 > 📄 **Full SIH submission document (16 sections, with screenshots):**
 > [`docs/SIH_Documentation.md`](docs/SIH_Documentation.md) · [documentation index](docs/README.md)
+> 🎬 **Demo video:** [Google Drive](https://drive.google.com/file/d/1ok8D4ddMCRJCyEIHwnPq0eNAzhgTWuIm/view?usp=sharing) · [what the demo shows](docs/DEMO.md)
+> 🌐 **Live prototype:** https://verigate-app.vercel.app (`officer1` / `officer123`)
 
 ---
 
@@ -27,7 +29,7 @@ explainable flags → **manual review queue** → audit log.
 ### 1. Backend — `http://localhost:8000`
 
 ```powershell
-cd C:\Users\bhang\verigate\backend
+cd backend
 .\venv\Scripts\activate
 uvicorn main:app --reload --port 8000
 ```
@@ -42,7 +44,7 @@ pipeline on all 30 so the dashboard is immediately alive.
 ### 2. Frontend — `http://localhost:5173`
 
 ```powershell
-cd C:\Users\bhang\verigate\frontend
+cd frontend
 npm install
 npm run dev
 ```
