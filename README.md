@@ -99,38 +99,58 @@ npm run dev
 
 ---
 
-## Deploy to Vercel (frontend only)
+## Live deployment (GitHub → Render + Vercel)
 
-> Vercel hosts **static sites only** — it cannot run the FastAPI backend.
-> The Vercel site will need a separately hosted API (see below).
+The code is already pushed to **https://github.com/atharva23x/verigate** (private).
+Both hosts connect to that repo, so deploying is a few clicks — no code changes.
 
-**Correct root folder: `frontend/`** (the folder that contains `index.html` +
-`package.json`). Deploying `verigate-deploy/` itself gives a blank screen,
-because the app's entry file is at `frontend/index.html`, not at the root.
+### Step 1 — Backend on Render (free)
 
-Two ways:
+1. https://render.com → log in (fastest is "Continue with GitHub").
+2. **New + → Web Service** → connect the `atharva23x/verigate` repo
+   (grant Render access to it when asked).
+3. Render detects `render.yaml` at the repo root → choose **Blueprint** → **Apply**.
+   It provisions `verigate-api` from `backend/` automatically
+   (free plan, lite dependencies, `$PORT`, health check `/health`).
+4. Wait for **Live** (first build ≈ 3–5 min) →
+   **https://verigate-api.onrender.com** — open
+   `https://verigate-api.onrender.com/health` to confirm.
 
-1. **Drag & drop** — drag the **`frontend`** folder (not the whole bundle)
-   onto https://vercel.com/new. Vercel auto-detects Vite and runs
-   `npm run build`, output `dist`.
-2. **Existing project** — Vercel dashboard → your project →
-   *Settings → General → Root Directory* → set it to `frontend` → Save →
-   *Deployments → ⋯ → Redeploy*.
+What the config already handles:
 
-`frontend/vercel.json` already contains the SPA rewrite so deep links
-(`/login`, `/queue`, …) don't 404.
+- **512 MB free-instance limit** → `requirements-lite.txt` drops
+  scipy/xgboost/scikit-learn; the app falls back to its heuristic consistency
+  engine (verified: `/health` reports `engine: "heuristic-fallback"`).
+- **Slow 0.1-CPU seeding** → seeding now runs in a *background* thread, so the
+  service is healthy immediately. Users are seeded first (login works at once),
+  and the 30 demo applications fill in over the following minutes.
+- `JWT_SECRET` is generated per environment; DB/storage live in `/tmp`
+  (ephemeral — the instance reseeds itself after every restart or sleep).
 
-### Point the frontend at your API
+### Step 2 — Frontend on Vercel
 
-The built app calls `VITE_API_URL` (default `http://localhost:8000`, which
-does not exist for a Vercel visitor). After the backend has a public URL:
+1. https://vercel.com/new → **Import Git Repository** → pick `atharva23x/verigate`.
+2. **Root Directory must be `frontend`** — Project → *Settings → General →
+   Root Directory* → `frontend` → Save. (This was the blank-screen cause: the
+   repo root has no `index.html`; it lives in `frontend/`.)
+3. Framework preset **Vite**, build `npm run build`, output `dist` (auto-filled)
+   → **Deploy**.
 
-1. Vercel → *Settings → Environment Variables* → add
-   `VITE_API_URL = https://your-backend.onrender.com`
-2. Redeploy (env vars are baked in at build time).
+The build already targets `https://verigate-api.onrender.com`
+(see `frontend/src/api/client.ts`), so **no environment variables are needed**.
+If you ever rename the Render service, set `VITE_API_URL` in
+Vercel → *Settings → Environment Variables* and redeploy.
 
-The backend allows any origin (`CORS allow_origins=["*"]`), so no CORS edit
-is needed.
+`frontend/vercel.json` contains the SPA rewrite, so deep links (`/login`,
+`/queue`, …) don't 404.
+
+### Step 3 — Verify
+
+1. Vercel URL → login page appears → sign in `officer1` / `officer123`.
+2. Backend healthy → `https://verigate-api.onrender.com/health`.
+3. Free Render instances **sleep after 15 min of inactivity**: the first load
+   after that takes ~40 s (cold start), and login works while the demo data
+   reseeds in the background.
 
 ---
 
