@@ -1,0 +1,196 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------- color themes
+   Palette steps are wired to these variables in tailwind.config.js.
+   :root is the DARK theme (default, so screenshots/e2e stay deterministic);
+   [data-theme="light"] flips the slate ramp (950 = page, 900 = card, 100 =
+   strongest text) and darkens the accent steps that are used as text/borders
+   so every combination keeps its contrast. Solid fills (500/600) stay put. */
+:root {
+  color-scheme: dark;
+
+  --slate-100: 241 245 249;
+  --slate-200: 226 232 240;
+  --slate-300: 203 213 225;
+  --slate-400: 148 163 184;
+  --slate-500: 100 116 139;
+  --slate-600: 71 85 105;
+  --slate-700: 51 65 85;
+  --slate-800: 30 41 59;
+  --slate-900: 15 23 42;
+  --slate-950: 2 6 23;
+
+  --amber-200: 253 246 211;
+  --amber-300: 252 231 121;
+  --amber-400: 251 191 36;
+
+  --emerald-200: 167 243 208;
+  --emerald-300: 110 231 183;
+  --emerald-400: 52 211 153;
+
+  --indigo-200: 199 210 254;
+  --indigo-300: 165 180 252;
+  --indigo-400: 129 140 248;
+  --indigo-950: 30 27 75;
+
+  --sky-100: 224 242 254;
+  --sky-200: 186 230 253;
+  --sky-300: 125 211 252;
+  --sky-400: 56 189 248;
+
+  --rose-200: 254 205 211;
+  --rose-300: 253 164 175;
+  --rose-400: 251 113 133;
+
+  --orange-300: 253 186 116;
+  --orange-400: 251 146 60;
+
+  --violet-300: 196 181 252;
+  --fuchsia-300: 240 171 252;
+
+  /* status glows: punchy on dark, softened on light */
+  --glow-success: rgba(16, 185, 129, 0.6);
+  --glow-warn: rgba(245, 158, 11, 0.55);
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+
+  /* slate ramp flip: text gets darker as the step number drops */
+  --slate-100: 2 6 23;
+  --slate-200: 15 23 42;
+  --slate-300: 30 41 59;
+  --slate-400: 51 65 85;
+  --slate-500: 71 85 105;
+  --slate-600: 100 116 139;
+  --slate-700: 203 213 225;
+  --slate-800: 226 232 240;
+  --slate-900: 255 255 255;
+  --slate-950: 241 245 249;
+
+  /* accents used as text/borders -> dark variants for light backgrounds */
+  --amber-200: 120 53 5;
+  --amber-300: 146 64 14;
+  --amber-400: 180 83 9;
+
+  --emerald-200: 6 78 59;
+  --emerald-300: 4 120 87;
+  --emerald-400: 5 150 105;
+
+  --indigo-200: 49 46 129;
+  --indigo-300: 55 48 163;
+  --indigo-400: 67 56 202;
+  --indigo-950: 224 231 255;
+
+  --sky-100: 12 74 110;
+  --sky-200: 7 89 133;
+  --sky-300: 3 105 161;
+  --sky-400: 2 132 199;
+
+  --rose-200: 136 19 34;
+  --rose-300: 159 18 57;
+  --rose-400: 190 18 66;
+
+  --orange-300: 124 45 18;
+  --orange-400: 154 52 18;
+
+  --violet-300: 91 33 182;
+  --fuchsia-300: 112 26 117;
+
+  /* status glows: punchy on dark, softened on light */
+  --glow-success: rgba(16, 185, 129, 0.28);
+  --glow-warn: rgba(245, 158, 11, 0.25);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  @apply bg-slate-950 text-slate-100 antialiased;
+  /* soft indigo/sky aurora so the app never looks like a flat box */
+  background-image:
+    radial-gradient(900px 480px at 12% -8%, rgba(79, 70, 229, 0.16), transparent 60%),
+    radial-gradient(820px 440px at 88% -6%, rgba(14, 165, 233, 0.12), transparent 60%),
+    radial-gradient(1000px 620px at 55% 115%, rgba(16, 185, 129, 0.06), transparent 65%);
+  background-attachment: fixed;
+}
+
+::selection {
+  @apply bg-indigo-500/40 text-white;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  @apply rounded bg-slate-700;
+}
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+@layer components {
+  .card {
+    @apply rounded-xl border border-slate-800/80 bg-slate-900/60 p-4 shadow-lg shadow-black/20;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease,
+      transform 0.18s ease;
+  }
+  .card:hover {
+    border-color: rgba(99, 102, 241, 0.28);
+    box-shadow: 0 10px 34px -14px rgba(79, 70, 229, 0.45),
+      0 0 0 1px rgba(99, 102, 241, 0.08);
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-primary {
+    @apply btn text-white;
+    background-image: linear-gradient(135deg, #4f46e5 0%, #2563eb 55%, #0ea5e9 100%);
+    box-shadow: 0 8px 22px -10px rgba(79, 70, 229, 0.85);
+  }
+  .btn-primary:hover:not(:disabled) {
+    filter: brightness(1.1);
+    box-shadow: 0 10px 26px -8px rgba(14, 165, 233, 0.75);
+  }
+  .btn-ghost {
+    @apply btn border border-slate-700 text-slate-200 hover:border-slate-600 hover:bg-slate-800/80;
+  }
+  .btn-danger {
+    @apply btn bg-rose-600 text-white hover:bg-rose-500;
+  }
+  .input {
+    @apply w-full rounded-lg border border-slate-700 bg-slate-950/70 px-3 py-2 text-sm text-slate-100 outline-none placeholder:text-slate-500 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/25;
+  }
+  .label {
+    @apply mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-400;
+  }
+  .gradient-text {
+    @apply bg-gradient-to-r from-indigo-300 via-sky-300 to-emerald-300 bg-clip-text text-transparent;
+  }
+}
+
+/* ------------------------------------------------- light-theme refinements */
+[data-theme="light"] body {
+  /* softer aurora over a light page */
+  background-image:
+    radial-gradient(900px 480px at 12% -8%, rgba(99, 102, 241, 0.12), transparent 60%),
+    radial-gradient(820px 440px at 88% -6%, rgba(14, 165, 233, 0.1), transparent 60%),
+    radial-gradient(1000px 620px at 55% 115%, rgba(16, 185, 129, 0.07), transparent 65%);
+}
+[data-theme="light"] ::selection {
+  @apply bg-indigo-500/25 text-slate-950;
+}
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+  @apply bg-slate-400;
+}
+[data-theme="light"] .card:hover {
+  border-color: rgba(99, 102, 241, 0.38);
+  box-shadow: 0 12px 30px -18px rgba(79, 70, 229, 0.5),
+    0 0 0 1px rgba(99, 102, 241, 0.12);
+}

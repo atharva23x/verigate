@@ -1,0 +1,16 @@
+# VeriGate backend - core dependencies (CPU-only)
+# Python 3.11 - 3.13 recommended (tested with 3.12)
+fastapi>=0.110
+uvicorn[standard]>=0.27
+pydantic>=2.6
+python-multipart>=0.0.9
+SQLAlchemy>=2.0.25
+PyJWT>=2.8
+Pillow>=10.2
+reportlab>=4.0
+pymupdf>=1.24
+numpy>=1.26,<3
+scipy>=1.11
+xgboost>=2.0
+scikit-learn>=1.4
+httpx>=0.27

@@ -1,0 +1,31 @@
+# Optional bonus - local development does NOT require Docker:
+#   backend : cd backend  && venv\Scripts\uvicorn main:app --reload --port 8000
+#   frontend: cd frontend && npm run dev
+#
+# With Docker:
+#   docker compose up --build
+#   backend  -> http://localhost:8000   (docs at /docs)
+#   frontend -> http://localhost:5173
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      MOCK_MODE: "True"        # demo safeguard: never depends on heavy OCR/ML
+      SEED_ON_STARTUP: "True"  # seeds 30 synthetic applications on first boot
+      JWT_SECRET: verigate-demo-secret-change-in-prod
+      VERIGATE_DB: /app/storage/verigate.db   # SQLite inside the data volume
+    # keep the SQLite DB + generated documents across restarts
+    volumes:
+      - verigate_data:/app/storage
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+
+volumes:
+  verigate_data:

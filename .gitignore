@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+venv/
+backend/.venv/
+backend/verigate.db
+backend/storage/
+*.egg-info/
+
+# Node
+node_modules/
+frontend/dist/
+npm-debug.log*
+
+# Env & OS
+.env
+.DS_Store
+Thumbs.db
+
+# Test output
+*.log

@@ -1,0 +1,18 @@
+# Render free-instance dependencies (512 MB RAM / 0.1 CPU).
+#
+# scipy, xgboost and scikit-learn are intentionally omitted: they do not fit
+# the free tier. The app degrades gracefully on purpose -
+#   consistency.py falls back to its deterministic heuristic engine, and
+#   tamper.py falls back to its numpy-only ELA path.
+# Local development and Docker use the full requirements.txt instead.
+fastapi>=0.110
+uvicorn[standard]>=0.27
+pydantic>=2.6
+python-multipart>=0.0.9
+SQLAlchemy>=2.0.25
+PyJWT>=2.8
+Pillow>=10.2
+reportlab>=4.0
+pymupdf>=1.24
+numpy>=1.26,<3
+httpx>=0.27

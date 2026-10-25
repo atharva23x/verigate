@@ -1,0 +1,218 @@
+{
+  "framework": "APH 2024-27 (synthetic checklist for prototype)",
+  "version": "1.0",
+  "categories": {
+    "Engineering": {
+      "mandatory_documents": [
+        {
+          "doc_type": "EOA_FORM",
+          "name": "Extension of Approval Application Form",
+          "rule_id": "APH-ENG-001",
+          "issuer_portal": null,
+          "validity_required": false,
+          "signature_required": false,
+          "qr_required": false,
+          "required_fields": ["institution_name", "aicte_id", "approved_intake", "issue_date"]
+        },
+        {
+          "doc_type": "PREV_EOA_LETTER",
+          "name": "Previous AICTE Extension of Approval Letter",
+          "rule_id": "APH-ENG-002",
+          "issuer_portal": "aicte_portal",
+          "validity_required": true,
+          "signature_required": true,
+          "qr_required": true,
+          "required_fields": ["doc_number", "issue_date", "expiry_date", "issuing_authority"]
+        },
+        {
+          "doc_type": "FIRE_SAFETY_NOC",
+          "name": "Fire & Emergency Safety NOC",
+          "rule_id": "APH-ENG-003",
+          "issuer_portal": "fire_dept",
+          "validity_required": true,
+          "signature_required": true,
+          "qr_required": false,
+          "required_fields": ["doc_number", "issue_date", "expiry_date", "issuing_authority"]
+        },
+        {
+          "doc_type": "BUILDING_STABILITY_CERT",
+          "name": "Building Structural Stability Certificate",
+          "rule_id": "APH-ENG-004",
+          "issuer_portal": "state_board",
+          "validity_required": true,
+          "signature_required": true,
+          "qr_required": false,
+          "required_fields": ["doc_number", "issue_date", "expiry_date", "issuing_authority"]
+        },
+        {
+          "doc_type": "LAND_OWNERSHIP_DEED",
+          "name": "Land Ownership / Lease Deed",
+          "rule_id": "APH-ENG-005",
+          "issuer_portal": null,
+          "validity_required": false,
+          "signature_required": false,
+          "qr_required": false,
+          "required_fields": ["doc_number", "issue_date"]
+        }
+      ]
+    },
+    "Management": {
+      "mandatory_documents": [
+        {
+          "doc_type": "EOA_FORM",
+          "name": "Extension of Approval Application Form",
+          "rule_id": "APH-MGT-001",
+          "issuer_portal": null,
+          "validity_required": false,
+          "signature_required": false,
+          "qr_required": false,
+          "required_fields": ["institution_name", "aicte_id", "approved_intake", "issue_date"]
+        },
+        {
+          "doc_type": "PREV_EOA_LETTER",
+          "name": "Previous AICTE Extension of Approval Letter",
+          "rule_id": "APH-MGT-002",
+          "issuer_portal": "aicte_portal",
+          "validity_required": true,
+          "signature_required": true,
+          "qr_required": true,
+          "required_fields": ["doc_number", "issue_date", "expiry_date", "issuing_authority"]
+        },
+        {
+          "doc_type": "FIRE_SAFETY_NOC",
+          "name": "Fire & Emergency Safety NOC",
+          "rule_id": "APH-MGT-003",
+          "issuer_portal": "fire_dept",
+          "validity_required": true,
+          "signature_required": true,
+          "qr_required": false,
+          "required_fields": ["doc_number", "issue_date", "expiry_date", "issuing_authority"]
+        },
+        {
+          "doc_type": "LEASE_DEED",
+          "name": "Campus Lease Deed (min 30 years)",
+          "rule_id": "APH-MGT-004",
+          "issuer_portal": null,
+          "validity_required": false,
+          "signature_required": false,
+          "qr_required": false,
+          "required_fields": ["doc_number", "issue_date"]
+        },
+        {
+          "doc_type": "AFFIDAVIT_UNDERTAKING",
+          "name": "Affidavit of Undertaking (Rs. 10 stamp)",
+          "rule_id": "APH-MGT-005",
+          "issuer_portal": null,
+          "validity_required": false,
+          "signature_required": false,
+          "qr_required": false,
+          "required_fields": ["doc_number", "issue_date"]
+        }
+      ]
+    },
+    "Pharmacy": {
+      "mandatory_documents": [
+        {
+          "doc_type": "EOA_FORM",
+          "name": "Extension of Approval Application Form",
+          "rule_id": "APH-PHR-001",
+          "issuer_portal": null,
+          "validity_required": false,
+          "signature_required": false,
+          "qr_required": false,
+          "required_fields": ["institution_name", "aicte_id", "approved_intake", "issue_date"]
+        },
+        {
+          "doc_type": "PREV_EOA_LETTER",
+          "name": "Previous AICTE Extension of Approval Letter",
+          "rule_id": "APH-PHR-002",
+          "issuer_portal": "aicte_portal",
+          "validity_required": true,
+          "signature_required": true,
+          "qr_required": true,
+          "required_fields": ["doc_number", "issue_date", "expiry_date", "issuing_authority"]
+        },
+        {
+          "doc_type": "PHARMACY_REG_CERT",
+          "name": "PCI Registration / Approval Certificate",
+          "rule_id": "APH-PHR-003",
+          "issuer_portal": "pharmacy_council",
+          "validity_required": true,
+          "signature_required": true,
+          "qr_required": true,
+          "required_fields": ["doc_number", "issue_date", "expiry_date", "issuing_authority"]
+        },
+        {
+          "doc_type": "PREMISES_NOC",
+          "name": "Premises NOC (State Board / University)",
+          "rule_id": "APH-PHR-004",
+          "issuer_portal": "state_board",
+          "validity_required": true,
+          "signature_required": true,
+          "qr_required": false,
+          "required_fields": ["doc_number", "issue_date", "expiry_date", "issuing_authority"]
+        },
+        {
+          "doc_type": "FIRE_SAFETY_NOC",
+          "name": "Fire & Emergency Safety NOC",
+          "rule_id": "APH-PHR-005",
+          "issuer_portal": "fire_dept",
+          "validity_required": true,
+          "signature_required": true,
+          "qr_required": false,
+          "required_fields": ["doc_number", "issue_date", "expiry_date", "issuing_authority"]
+        }
+      ]
+    }
+  },
+  "global_rules": [
+    {
+      "rule_id": "APH-GEN-F01",
+      "check": "issue_date_not_future",
+      "severity": "CRITICAL",
+      "reason": "Issue date is in the future - document cannot be relied upon."
+    },
+    {
+      "rule_id": "APH-GEN-F02",
+      "check": "expiry_not_past",
+      "severity": "CRITICAL",
+      "reason": "Document has expired - a valid, un-expired document is required."
+    },
+    {
+      "rule_id": "APH-GEN-F03",
+      "check": "required_fields_present",
+      "severity": "WARN",
+      "reason": "One or more mandatory fields could not be extracted from the document."
+    },
+    {
+      "rule_id": "APH-GEN-T01",
+      "check": "tamper_score",
+      "severity": "CRITICAL",
+      "reason": "Error Level Analysis indicates a region with anomalous recompression (possible edit)."
+    },
+    {
+      "rule_id": "APH-GEN-D01",
+      "check": "duplicate_phash",
+      "severity": "CRITICAL",
+      "reason": "Perceptual hash matches a document already submitted by another application."
+    },
+    {
+      "rule_id": "APH-GEN-I01",
+      "check": "issuer_verified",
+      "severity": "CRITICAL",
+      "reason": "Issuer portal could not confirm this document (INVALID / NOT_FOUND / EXPIRED / SOURCE_UNAVAILABLE)."
+    },
+    {
+      "rule_id": "APH-GEN-C01",
+      "check": "consistency_score",
+      "severity": "WARN",
+      "reason": "Extracted fields are inconsistent with the AICTE master record."
+    },
+    {
+      "rule_id": "APH-GEN-O01",
+      "check": "ocr_confidence",
+      "severity": "WARN",
+      "reason": "OCR confidence below the Evidence Gate threshold - machine cannot vouch for the text."
+    }
+  ]
+}

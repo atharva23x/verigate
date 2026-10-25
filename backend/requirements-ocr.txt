@@ -1,0 +1,10 @@
+# OPTIONAL real OCR engines - NOT required for the demo.
+# MOCK_MODE=True (the default) bypasses these entirely.
+# Install with:  pip install -r requirements-ocr.txt
+#
+# PaddleOCR (English + Hindi). Heavy download (~500MB incl. models).
+paddlepaddle>=2.6 ; platform_machine != "arm64"
+paddleocr>=2.8
+# pytesseract fallback - ALSO requires the Tesseract binary:
+#   Windows: https://github.com/UB-Mannheim/tesseract/wiki  (add to PATH)
+pytesseract>=0.3.10
