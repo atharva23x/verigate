@@ -1,7 +1,7 @@
-# Render Blueprint - provisions the VeriGate API from this repo.
+# Render Blueprint - provisions the VeriGate API and Frontend from this repo.
 #
-# Render dashboard -> New + -> Web Service -> connect the GitHub repo ->
-# "Use render.yaml" (Blueprint) -> Apply. Everything below is then automatic.
+# Render dashboard -> New + -> Blueprint -> connect the GitHub repo ->
+# "Use render.yaml" -> Apply. Everything below is then automatic.
 services:
   - type: web
     name: verigate-api          # Render may append a suffix if the name is taken;
@@ -26,3 +26,17 @@ services:
         value: /tmp/verigate.db           # ephemeral: reseeded after a restart
       - key: VERIGATE_STORAGE
         value: /tmp/verigate-storage
+
+  - type: static
+    name: verigate-ui
+    plan: free
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        value: https://verigate-api-8ejd.onrender.com
