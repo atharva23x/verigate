@@ -1,7 +1,6 @@
 # VeriGate
 
-**AI-Powered Application Validation, Document Authentication and Regulatory Compliance Verification**
-**for AICTE Extension of Approval (EoA)**
+**AI-Powered Application Validation, Document Authentication and Regulatory Compliance Verification for AICTE Extension of Approval (EoA)**
 
 > **AI advises. Evidence decides. Humans approve.**
 
@@ -9,277 +8,117 @@ Smart India Hackathon 2026 · Problem statement **SIH26261** · All India Counci
 
 | | |
 |---|---|
-| 🌐 **Live prototype** | [**verigate-app.vercel.app**](https://verigate-app.vercel.app) — sign in with `officer1` / `officer123` |
-| 🎬 **Demo video (~4 min)** | [Google Drive](https://drive.google.com/file/d/1ok8D4ddMCRJCyEIHwnPq0eNAzhgTWuIm/view?usp=sharing) · [QR code](docs/demo-video-qr.png) · [what the demo shows](docs/DEMO.md) |
-| 📄 **SIH documentation (16 sections)** | [**docs/SIH_Documentation.md**](docs/SIH_Documentation.md) |
-| 📚 **Documentation index** | [docs/README.md](docs/README.md) |
-| ⚙️ **How it works, in one line** | upload → OCR → APH 2024-27 checklist → issuer verification → tamper/duplicate detection → XGBoost consistency → **Evidence Gate** → human review → audit |
+| 🌐 **Live prototype** | [**https://verigate-app.vercel.app**](https://verigate-app.vercel.app) — sign in with `officer1` / `officer123` |
+| 🎬 **Demo video (~4 min)** | [Google Drive](https://drive.google.com/file/d/1ok8D4ddMCRJCyEIHwnPq0eNAzhgTWuIm/view?usp=sharing) · [walkthrough notes](docs/DEMO.md) |
+| 📄 **Full documentation (16 sections)** | [**docs/SIH_Documentation.md**](docs/SIH_Documentation.md) |
 
-> ⏱ **Cold start:** the live demo runs on a free Render instance that sleeps after
-> 15 minutes of inactivity — the first request can take ~40 s to wake up. Demo data
-> reseeds in the background after every restart. A one-command local build is below.
+> ⏱ The hosted demo runs on free tiers, so the first load can take ~40 s while the
+> backend wakes up. The demo video is the fastest way to see the full flow.
 
 ---
 
-## What VeriGate does
+## What it does
 
-VeriGate is a verification workspace that sits in front of the AICTE application
-portal. It reads the uploaded EoA documents, extracts fields with page-level
-bounding boxes and confidence, checks them against configurable APH rules and
-mock AICTE master records, looks for image tampering and duplicated documents,
-and queries issuer sources.
-
-Its core safety property is the **Evidence Gate**: an application is marked
-`VERIFIED` only when every evidence condition holds — OCR confidence above
-threshold, every issuer-backed document confirmed, no critical rule violation,
-no tampering, no duplication, and enough cross-record consistency. If any link is
-weak it returns `INSUFFICIENT_EVIDENCE` and routes the case to a human reviewer
-with evidence-linked reasons. **It never auto-rejects and never approves.**
-
-> VeriGate is decision support. All statutory scrutiny, inspection and final
-> decisions remain with the competent AICTE authorities.
-
----
-
-## Deployment bundle
-
-Everything needed to **build and deploy VeriGate** lives in this folder.
-It is self-contained: no files outside this directory are required.
+Institutions submit EoA applications with dozens of scanned certificates — Fire NOCs,
+building stability certificates, land deeds, council registrations, previous approval
+letters. VeriGate reads them and does the preliminary checking:
 
 ```
-verigate-deploy/
-├── README.md              ← you are here (deployment guide)
-├── PROJECT_README.md      ← full project docs, demo scenarios, architecture
-├── docker-compose.yml     ← one-command deployment (recommended)
-├── deploy.bat             ← build + start with Docker          [Windows]
-├── stop.bat               ← stop the deployment               [Windows]
-├── logs.bat               ← follow live logs                  [Windows]
-├── reset.bat              ← stop and wipe the database        [Windows]
-├── dev.bat                ← run WITHOUT Docker (hot reload)    [Windows]
-├── scripts/
-│   ├── dev.ps1            ← the logic behind dev.bat
-│   └── healthcheck.ps1    ← verifies backend + frontend are up
-├── backend/               ← FastAPI app (Python 3.11–3.13)
-│   ├── main.py, app/
-│   ├── requirements.txt, requirements-ocr.txt
-│   ├── Dockerfile, .dockerignore, .env.example
-│   └── test_*.py          ← API test suites
-└── frontend/              ← React + Vite + Tailwind app
-    ├── src/, public/, index.html
-    ├── package.json, package-lock.json
-    ├── vite.config.ts, tsconfig*.json, tailwind.config.js, postcss.config.js
-    ├── Dockerfile, nginx.conf, .dockerignore, .env.example
+upload → OCR → APH 2024-27 checklist → issuer verification →
+tamper/duplicate detection → cross-record consistency → EVIDENCE GATE → human review → audit
 ```
 
-> Excluded on purpose (not needed to build): `node_modules/`, `venv/`,
-> `dist/`, `__pycache__/`, `*.db`, `storage/`, screenshots, e2e scripts.
+Every extracted field carries a **page number, bounding box and confidence**. Every
+finding carries a **rule ID, reason, document, page and bbox** — so an officer can see
+exactly where the machine looked.
+
+## The Evidence Gate
+
+VeriGate does not try to answer *"is this application valid?"*. It answers a narrower,
+safer question: **"is the evidence strong enough to mark this application VERIFIED?"**
+
+| # | Gate condition | Threshold |
+|---|---|---|
+| 1 | Mean OCR confidence | > 0.90 |
+| 2 | Every issuer-backed document confirmed | all `VERIFIED` |
+| 3 | Critical rule violations | 0 |
+| 4 | Tamper score | < 0.30 |
+| 5 | Duplicate documents | 0 |
+| 6 | Cross-record consistency | ≥ 0.70 |
+
+All six must hold. Otherwise the result is **`INSUFFICIENT_EVIDENCE`** and the case goes
+to a human review queue with evidence-linked reasons. Confidence is reported as the
+**weakest link**, not an average — one unverified Fire NOC cannot be hidden by eleven
+strong signals.
+
+**It never auto-rejects, never auto-approves, and never certifies on partial evidence.**
 
 ---
 
-## 📄 Project documentation
+## Screenshots
 
-| Document | What it covers |
+| Dashboard — gate outcomes, risk-ranked cases | Scenario C — tamper bounding box |
 |---|---|
-| [**SIH Project Documentation**](docs/SIH_Documentation.md) | Complete 16-section submission document — abstract, problem statement, proposed solution, objectives, existing vs proposed system, methodology, technology stack, system architecture, implementation with screenshots, innovation, feasibility, expected outcomes, future scope and references. |
-| [**Documentation index**](docs/README.md) | Quick links and project facts. |
-| [**Project README**](PROJECT_README.md) | Full project documentation: demo scenarios, API, architecture and setup. |
+| <img src="docs/screenshots/02-dashboard.jpg" width="100%"> | <img src="docs/screenshots/03-tamper-bbox.jpg" width="100%"> |
+| **Manual review queue** | **Submitted values vs AICTE master record** |
+| <img src="docs/screenshots/05-review-queue.jpg" width="100%"> | <img src="docs/screenshots/07-consistency-vs-master.jpg" width="100%"> |
 
-> Problem statement **SIH26261** — AI-Powered Application Validation, Document Authentication and Regulatory Compliance Verification (AICTE, Ministry of Education).
-
----
-
-## Option A — Deploy with Docker (recommended)
-
-**Prerequisite:** [Docker Desktop](https://www.docker.com/products/docker-desktop/) (or Docker Engine + compose plugin).
-
-```bat
-deploy.bat
-```
-
-That single command builds both images and starts the stack:
-
-| Service  | URL                         |
-| -------- | --------------------------- |
-| Frontend | http://localhost:5173       |
-| Backend  | http://localhost:8000       |
-| API docs | http://localhost:8000/docs  |
-| Health   | http://localhost:8000/health|
-
-Other commands (double-click):
-
-- `logs.bat` — stream logs (first boot seeds ~30 applications, takes ~30 s)
-- `stop.bat` — stop containers, **keep** the data
-- `reset.bat` — stop containers and delete the database volume (fresh seed on next start)
-
-Manual equivalent:
-
-```powershell
-docker compose up --build -d     # start
-docker compose logs -f           # logs
-docker compose down              # stop (keep data)
-docker compose down -v           # stop + wipe data
-```
+More: [all 12 screenshots](docs/screenshots/) · embedded in the [documentation](docs/SIH_Documentation.md#113-screenshots-captured-from-the-running-prototype).
 
 ---
 
-## Option B — Run locally without Docker (dev mode)
+## The five demo scenarios
 
-**Prerequisites:** Python 3.11–3.13 (3.12 recommended) and Node.js 20+.
+| # | Scenario | What to look for |
+|---|---|---|
+| **A** | Clean application | green **`EVIDENCE GATE: VERIFIED`**, zero flags |
+| **B** | Missing mandatory Fire NOC | CRITICAL flag **`APH-MGT-003`**, checklist row *not uploaded*, gate abstains |
+| **C** | Tampered date on the past EoA letter | **red ELA bounding box** over the edited region, issuer reports the signature invalid |
+| **D** | Issuer portal down | **`SOURCE_UNAVAILABLE`** → manual review, never auto-rejected |
+| **E** | Low OCR confidence (0.87 < 0.90) | `INSUFFICIENT_EVIDENCE` → review queue |
 
-```bat
-dev.bat
-```
+All data is synthetic: generated PDFs, mock AICTE master records, mock issuer portals.
 
-It will, on first run only:
+## Demo accounts
 
-1. create `backend\venv` and install `requirements.txt`
-2. run `npm install` in `frontend\`
-3. open two terminals: backend on **:8000**, frontend on **:5173**
-
-Manual equivalent:
-
-```powershell
-# Terminal 1 — backend
-cd backend
-py -3.12 -m venv venv
-.\venv\Scripts\activate
-pip install -r requirements.txt
-uvicorn main:app --reload --port 8000
-
-# Terminal 2 — frontend
-cd frontend
-npm install
-npm run dev
-```
+| Username | Password | Role | Rights |
+|---|---|---|---|
+| `officer1` | `officer123` | officer | create, upload, validate, decide |
+| `reviewer1` | `reviewer123` | reviewer | approve / reject / request information |
+| `auditor1` | `auditor123` | auditor | read-only; writes return **403** |
 
 ---
 
-## Live deployment (GitHub → Render + Vercel)
+## Tech stack
 
-The code is already pushed to **https://github.com/atharva23x/verigate** (public).
-Both hosts connect to that repo, so deploying is a few clicks — no code changes.
+**Frontend** React 18 · TypeScript · Vite · Tailwind · Axios
+**Backend** FastAPI · Python 3.12 · SQLAlchemy · SQLite (PostgreSQL-ready) · Pydantic · ReportLab
+**Analysis** PyMuPDF · PaddleOCR/Tesseract · XGBoost consistency model · ELA tamper detection · pHash duplicates · HMAC-signed mock issuer APIs
+**Auth** PBKDF2-SHA256 · JWT · role guards · append-only audit log
 
-**Already deployed:**
+## Run it locally
 
-| Service | URL |
+```bash
+docker compose up --build
+```
+
+Then open http://localhost:5173 and sign in as `officer1` / `officer123`.
+First boot seeds 30 synthetic applications through the full pipeline (~30 s).
+
+---
+
+## Documentation
+
+| Document | Contents |
 |---|---|
-| Frontend (Vercel) | https://verigate-app.vercel.app |
-| Backend (Render) | https://verigate-api-8ejd.onrender.com |
-| API docs | https://verigate-api-8ejd.onrender.com/docs |
-
-### Step 1 — Backend on Render (free)
-
-1. https://render.com → log in (fastest is "Continue with GitHub").
-2. **New + → Web Service** → connect the `atharva23x/verigate` repo
-   (grant Render access to it when asked).
-3. Render detects `render.yaml` at the repo root → choose **Blueprint** → **Apply**.
-   It provisions `verigate-api` from `backend/` automatically
-   (free plan, lite dependencies, `$PORT`, health check `/health`). Render may
-   append a suffix to the name if `verigate-api` is already taken — the live
-   URL is whatever the service page shows.
-4. Wait for **Live** (first build ≈ 3–5 min) →
-   **https://verigate-api-8ejd.onrender.com** — open
-   `https://verigate-api-8ejd.onrender.com/health` to confirm.
-
-What the config already handles:
-
-- **512 MB free-instance limit** → `requirements-lite.txt` drops
-  scipy/xgboost/scikit-learn; the app falls back to its heuristic consistency
-  engine (verified: `/health` reports `engine: "heuristic-fallback"`).
-- **Slow 0.1-CPU seeding** → seeding now runs in a *background* thread, so the
-  service is healthy immediately. Users are seeded first (login works at once),
-  and the 30 demo applications fill in over the following minutes.
-- `JWT_SECRET` is generated per environment; DB/storage live in `/tmp`
-  (ephemeral — the instance reseeds itself after every restart or sleep).
-
-### Step 2 — Frontend on Vercel
-
-**Live frontend: https://verigate-app.vercel.app** (project `verigate-app`).
-
-1. https://vercel.com/new → **Import Git Repository** → pick `atharva23x/verigate`.
-2. **Root Directory must be `frontend`** — Project → *Settings → General →
-   Root Directory* → `frontend` → Save. (This was the blank-screen cause: the
-   repo root has no `index.html`; it lives in `frontend/`.)
-3. Framework preset **Vite**, build `npm run build`, output `dist` (auto-filled)
-   → **Deploy**.
-
-The build already targets `https://verigate-api-8ejd.onrender.com`
-(see `frontend/src/api/client.ts`), so **no environment variables are needed**.
-If you ever rename the Render service, set `VITE_API_URL` in
-Vercel → *Settings → Environment Variables* and redeploy.
-
-`frontend/vercel.json` contains the SPA rewrite, so deep links (`/login`,
-`/queue`, …) don't 404.
-
-> ⚠️ **Deployment Protection must stay OFF**, otherwise every visitor is sent to
-> a Vercel login screen instead of your app (it looks like a broken/foreign
-> site, which is very confusing). Check with
-> `vercel project protection verigate-app --json` — `ssoProtection` should be
-> `null`. New projects on some accounts default to
-> `all_except_custom_domains`. Toggle it off via
-> `vercel project protection disable verigate-app --sso` or
-> *Project → Settings → Deployment Protection*.
-
-### Step 3 — Verify
-
-1. Vercel URL → login page appears → sign in `officer1` / `officer123`.
-2. Backend healthy → `https://verigate-api-8ejd.onrender.com/health`.
-3. Free Render instances **sleep after 15 min of inactivity**: the first load
-   after that takes ~40 s (cold start), and login works while the demo data
-   reseeds in the background.
+| [**SIH Project Documentation**](docs/SIH_Documentation.md) | 16 sections: abstract, problem statement, proposed solution, objectives, existing vs proposed system, methodology, technology stack, architecture, implementation with screenshots, innovation, feasibility, outcomes, future scope, references |
+| [**Demo guide**](docs/DEMO.md) | Video, demo accounts, scenario walkthrough, local run |
+| [**Project README**](PROJECT_README.md) | Feature detail, API reference, data model, architecture |
+| [**Deployment guide**](docs/DEPLOYMENT.md) | Docker, local dev, Render + Vercel, configuration, troubleshooting |
+| [**Documentation index**](docs/README.md) | Quick links and project facts |
 
 ---
 
-## Production build notes
-
-- **Frontend:** `cd frontend && npm run build` → static files in `frontend\dist\`,
-  serve with any static server (the bundled `nginx.conf` shows SPA-fallback config).
-  Set `VITE_API_URL` in `frontend\.env` **before building** if the API is not on
-  the same host — it is baked in at build time.
-- **Backend:** `uvicorn main:app --host 0.0.0.0 --port 8000` behind your reverse
-  proxy (TLS at the proxy). Configure `backend\.env` first.
-- **Never ship the default secret** — set a strong `JWT_SECRET`.
-
-### Configuration (`backend\.env` — copy from `backend\.env.example`)
-
-| Variable | Default | Meaning |
-| --- | --- | --- |
-| `MOCK_MODE` | `True` | Demo safeguard: never depends on heavy OCR/ML |
-| `SEED_ON_STARTUP` | `True` | Seeds 30 synthetic applications when the DB is empty |
-| `JWT_SECRET` | demo value | **Change in production** |
-| `JWT_EXPIRES_MIN` | `480` | Token lifetime |
-| `VERIGATE_DB` | `verigate.db` | SQLite path |
-| `VERIGATE_STORAGE` | `storage` | Uploads / page renders / ELA images |
-| `OCR_CONFIDENCE_THRESHOLD` | `0.90` | Evidence Gate threshold |
-| `ISSUER_OUTAGE_PORTALS` | empty | Comma-separated portals to simulate as down |
-
----
-
-## Verify the deployment
-
-```powershell
-powershell -File scripts\healthcheck.ps1
-```
-
-Sign in at http://localhost:5173 with a demo account:
-
-| Username | Password | Role |
-| --- | --- | --- |
-| `officer1` | `officer123` | officer (upload, validate, decide) |
-| `reviewer1` | `reviewer123` | reviewer (approve / reject / request) |
-| `auditor1` | `auditor123` | auditor (read-only, exports audit) |
-
----
-
-## Troubleshooting
-
-- **Port already in use** — something else holds 5173/8000:
-  `netstat -ano | findstr :5173` then stop that process.
-- **First boot seems stuck** — seeding 30 applications runs the full pipeline
-  and takes ~30 s; watch `logs.bat`.
-- **Frontend can't reach the API** — check `VITE_API_URL` (must be reachable
-  from the *browser*, e.g. `http://localhost:8000`) and rebuild.
-- **Start from scratch** — `reset.bat` (Docker) or delete `backend\verigate.db`
-  and the `backend\storage\` folder (local).
-
-More detail: [PROJECT_README.md](PROJECT_README.md).
+> **Scope note.** VeriGate is decision support, not an approval authority. It does not
+> grant approval, reject an application, or establish forgery. All statutory scrutiny,
+> inspection and final decisions remain with the competent AICTE authorities.

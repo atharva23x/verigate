@@ -68,7 +68,7 @@ uvicorn main:app --reload --port 8000
 cd frontend && npm install && npm run dev
 ```
 
-Full setup, architecture and API reference: [`../README.md`](../README.md) ·
+Full setup, architecture and API reference: [`DEPLOYMENT.md`](DEPLOYMENT.md) ·
 [`../PROJECT_README.md`](../PROJECT_README.md).
 
 ---

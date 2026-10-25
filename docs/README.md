@@ -6,9 +6,10 @@ This folder contains the project documentation for **VeriGate — AI-Powered App
 |---|---|
 | [**SIH Project Documentation**](SIH_Documentation.md) | The complete 16-section submission document: abstract, problem statement, proposed solution, objectives, existing vs proposed system, methodology, technology stack, architecture, implementation, innovation, feasibility, outcomes, future scope and references. |
 | [**Demo guide**](DEMO.md) | Demo video link, QR code, live deployment, demo accounts, scenario walkthrough with timecodes and local run instructions. |
+| [**Deployment guide**](DEPLOYMENT.md) | Docker, local dev mode, Render + Vercel hosting, configuration and troubleshooting. |
 | [**Screenshots**](screenshots/) | Captured from the running prototype: dashboard, tamper overlay, review queue, audit log, consistency view, duplicate pair, issuer portals and analytics. |
-| [**Project README**](../PROJECT_README.md) | Full project documentation: features, demo scenarios, API, architecture and setup. |
-| [**Deployment Guide**](../README.md) | How to build and run the deployment bundle. |
+| [**Project README**](../PROJECT_README.md) | Feature detail, API reference, data model, architecture and setup. |
+| [**Project overview**](../README.md) | Live prototype, demo video, screenshots, tech stack and documentation index. |
 
 ---
 
