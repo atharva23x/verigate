@@ -10,9 +10,11 @@
 |---|---|
 | **Project name** | **VeriGate** — Evidence-Gated AI Decision Support for AICTE EoA Validation |
 | **Tagline** | *AI advises. Evidence decides. Humans approve.* |
-| **Team name** | [Team Name / Team ID] |
-| **Team members** | [Member 1 — Full Name — Role]  <br> [Member 2 — Full Name — Role]  <br> [Member 3 — Full Name — Role]  <br> [Member 4 — Full Name — Role]  <br> [Member 5 — Full Name — Role]  <br> [Member 6 — Full Name — Role] |
-| **College name** | [College / Institute Name, City, State] |
+| **Team members** | Atharva Sachin Bhangale  <br> Naresh Balasaheb Kekan  <br> Tejas Siddheshwar Bagade
+  <br> Vaibhavi Dnyaneshwar kothare 
+  <br> SOHAM NARAYAN UDHANE 
+  <br> Nayan Khune |
+| **College name** | All India Shri Shivaji Memorial Society's College of Engineering, Pune |
 | **SIH edition** | Smart India Hackathon 2026 |
 | **Problem Statement ID** | **SIH26261** |
 | **Problem Statement Title** | AI-Powered Application Validation, Document Authentication and Regulatory Compliance Verification |
