@@ -12,12 +12,7 @@
 | **Tagline** | *AI advises. Evidence decides. Humans approve.* |
 | **Team Members** |
 |---|
-| Atharva Sachin Bhangale |
-| Naresh Balasaheb Kekan |
-| Tejas Siddheshwar Bagade |
-| Vaibhavi Dnyaneshwar Kothare |
-| Soham Narayan Udhane |
-| Nayan Khune |
+| Atharva Sachin Bhangale<br>Naresh Balasaheb Kekan<br>Tejas Siddheshwar Bagade<br>Vaibhavi Dnyaneshwar Kothare<br>SOHAM NARAYAN UDHANE<br>Nayan Khune |
 | **College name** | All India Shri Shivaji Memorial Society's College of Engineering, Pune |
 | **SIH edition** | Smart India Hackathon 2026 |
 | **Problem Statement ID** | **SIH26261** |
