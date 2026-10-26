@@ -22,7 +22,7 @@
 | **Demo video** | **https://drive.google.com/file/d/1ok8D4ddMCRJCyEIHwnPq0eNAzhgTWuIm/view?usp=sharing** · QR: `docs/demo-video-qr.png` |
 | **Source code** | https://github.com/atharva23x/verigate |
 
-> **Note:** Replace every bracketed placeholder with your team's details before submission. The problem statement ID above is the ID published for this AICTE statement; confirm it once against the official SIH portal listing for your edition.
+
 
 ---
 
